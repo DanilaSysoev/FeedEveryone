@@ -7,7 +7,7 @@ public class Settlement
 {
     public string Name { get; private set; }
 
-    internal Settlement(string name)
+    public Settlement(string name)
     {
         Name = name;
         tiles = new Dictionary<Position, Tile>();

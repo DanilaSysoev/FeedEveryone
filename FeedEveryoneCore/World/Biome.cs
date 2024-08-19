@@ -18,7 +18,7 @@ public class Biome
         return HashCode.Combine(Name);
     }
 
-    internal Biome(string name)
+    public Biome(string name)
     {
         Name = name;
     }

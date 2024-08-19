@@ -39,9 +39,14 @@ public class Tile
     }
 
 
-    internal Tile(Position position, Biome biome)
+    public Tile(Position position, Biome biome)
     {
         Position = position;
+        Biome = biome;
+    }
+    public Tile(int line, int column, Biome biome)
+    {
+        Position = new Position(line, column);
         Biome = biome;
     }
     internal void DetachSettlement()
