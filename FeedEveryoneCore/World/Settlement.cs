@@ -38,6 +38,15 @@ public class Settlement
     {
         return Name;
     }
+    public override bool Equals(object? obj)
+    {
+        return obj is Settlement settlement &&
+               Name == settlement.Name;
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name);
+    }
 
     private readonly Dictionary<Position, Tile> tiles;
 }

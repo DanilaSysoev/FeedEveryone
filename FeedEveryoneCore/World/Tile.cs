@@ -10,11 +10,7 @@ public class Tile
 
     public int Line => Position.Line;
     public int Column => Position.Column;
-
-    public override string ToString()
-    {
-        return $"{Position} {Biome}";
-    }
+    
     
     public Settlement GetSettlement()
     {
@@ -25,6 +21,28 @@ public class Tile
     public bool AttachedToSettlement()
     {
         return settlement is not null;
+    }
+
+    public override string ToString()
+    {
+        return $"{Position} {Biome}";
+    }
+    public override bool Equals(object? obj)
+    {
+        return obj is Tile tile &&
+               Position.Equals(tile.Position) &&
+               Biome.Equals(tile.Biome);
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Position, Biome);
+    }
+
+
+    internal Tile(Position position, Biome biome)
+    {
+        Position = position;
+        Biome = biome;
     }
     internal void DetachSettlement()
     {
@@ -37,11 +55,7 @@ public class Tile
         
         this.settlement = settlement;
     }
-    internal Tile(Position position, Biome biome)
-    {
-        Position = position;
-        Biome = biome;
-    }
+
 
     private Settlement? settlement;
 }

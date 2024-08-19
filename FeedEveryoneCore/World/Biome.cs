@@ -8,7 +8,15 @@ public class Biome
     {
         return Name;
     }
-
+    public override bool Equals(object? obj)
+    {
+        return obj is Biome biome &&
+               Name == biome.Name;
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name);
+    }
 
     internal Biome(string name)
     {
