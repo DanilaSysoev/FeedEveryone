@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/FeedEveryoneCore/FeedEveryoneCore.csproj",
+                "${workspaceFolder}/FeedEveryoneCoreTests/FeedEveryoneCoreTests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/FeedEveryoneCore/FeedEveryoneCore.csproj",
+                "${workspaceFolder}/FeedEveryoneCoreTests/FeedEveryoneCoreTests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/FeedEveryoneCore/FeedEveryoneCore.csproj"
+                "${workspaceFolder}/FeedEveryoneCoreTests/FeedEveryoneCoreTests.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
