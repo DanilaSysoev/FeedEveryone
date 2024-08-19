@@ -40,5 +40,4 @@ public class WorldMap
 
 
     private readonly Tile[,] tiles;
-
 }

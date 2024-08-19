@@ -43,27 +43,22 @@ public class Position : IComparable<Position>
     {
         return left.CompareTo(right) < 0;
     }
-
     public static bool operator <=(Position left, Position right)
     {
         return left.CompareTo(right) <= 0;
     }
-
     public static bool operator >(Position left, Position right)
     {
         return left.CompareTo(right) > 0;
     }
-
     public static bool operator >=(Position left, Position right)
     {
         return left.CompareTo(right) >= 0;
     }
-
     public static bool operator ==(Position left, Position right)
     {
         return left.CompareTo(right) == 0;
     }
-
     public static bool operator !=(Position left, Position right)
     {
         return left.CompareTo(right) != 0;
