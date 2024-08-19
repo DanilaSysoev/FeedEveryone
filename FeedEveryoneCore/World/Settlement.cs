@@ -29,7 +29,7 @@ public class Settlement
         tiles.Remove(tile.Position);
         tile.DetachSettlement();
     }
-    public bool Contains(Tile tile)
+    public bool ContainsTile(Tile tile)
     {
         return tiles.ContainsKey(tile.Position);
     }
