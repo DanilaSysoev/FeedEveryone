@@ -1,3 +1,6 @@
+#pragma warning disable NUnit2043 // Use ComparisonConstraint for better assertion messages in case of failure
+#pragma warning disable NUnit2010 // Use ComparisonConstraint for better assertion messages in case of failure
+
 using FeedEveryone.Service;
 
 namespace FeedEveryoneTests.Service;
