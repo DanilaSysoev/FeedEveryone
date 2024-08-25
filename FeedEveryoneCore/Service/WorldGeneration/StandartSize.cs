@@ -14,6 +14,7 @@ public struct StandartSize : IComparable<StandartSize>
     }
 
     public static implicit operator int(StandartSize s) => s.Value;
+    public static implicit operator StandartSize(int v) => new StandartSize(v);
 
     public int CompareTo(StandartSize other)
     {

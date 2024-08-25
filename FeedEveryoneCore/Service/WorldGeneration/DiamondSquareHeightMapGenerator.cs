@@ -98,11 +98,11 @@ public class DiamondSquareHeightMapGenerator : IHeightMapGenerator
     {
         int step = side / 2;
         for(int line = 0, line_number = 0;
-            line < squares.GetLength(0);
+            line < square.Height;
             line += step, line_number++)
         {
             for(int col = (1 - line_number % 2) * step;
-                col < squares.GetLength(1);
+                col < square.Width;
                 col += side)
             {
                 square[line, col] =
@@ -162,8 +162,8 @@ public class DiamondSquareHeightMapGenerator : IHeightMapGenerator
     private void SquareSteps(HeightMap square, int side)
     {
         int step = side / 2;
-        for(int line = step; line < squares.GetLength(0); line += side)
-            for(int col = step; col < squares.GetLength(1); col += side)
+        for(int line = step; line < square.Height; line += side)
+            for(int col = step; col < square.Width; col += side)
                 square[line, col] =
                     CalculateSquarePoint(line, col, square, step);
     }
