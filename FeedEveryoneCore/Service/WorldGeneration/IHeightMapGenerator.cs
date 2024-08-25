@@ -4,5 +4,5 @@ namespace FeedEveryone.Service.WorldGeneration;
 
 public interface IHeightMapGenerator
 {
-    HeightMap Generate();
+    HeightMap Generate(StandartSize height, StandartSize width);
 }
