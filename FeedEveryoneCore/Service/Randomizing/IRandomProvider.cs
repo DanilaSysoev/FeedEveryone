@@ -3,7 +3,11 @@ namespace FeedEveryone.Service.Randomizing;
 public interface IRandomProvider
 {
     /// <summary>
-    /// Returns a random float between 0 and 1.
+    /// Возвращает случайное число в диапазоне [0, 1).
     /// </summary>
     float GetFloat();
+    /// <summary>
+    /// Возвращает случайное число в диапазоне [min, max).
+    /// </summary>
+    float GetFloat(float min, float max);
 }

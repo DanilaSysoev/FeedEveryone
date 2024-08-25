@@ -16,5 +16,10 @@ public class SystemRandomProvider : IRandomProvider
         return random.NextSingle();
     }
 
+    public float GetFloat(float min, float max)
+    {
+        return random.NextSingle() * (max - min) + min;
+    }
+
     private readonly Random random;
 }

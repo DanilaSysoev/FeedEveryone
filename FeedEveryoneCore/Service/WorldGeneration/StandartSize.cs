@@ -63,4 +63,29 @@ public struct StandartSize : IComparable<StandartSize>
     {
         return left.CompareTo(right) >= 0;
     }
+
+    public static int operator /(StandartSize left, StandartSize right)
+    {
+        return left.Value / right.Value;
+    }
+    public static int operator %(StandartSize left, StandartSize right)
+    {
+        return left.Value % right.Value;
+    }
+    public static int operator /(StandartSize left, int right)
+    {
+        return left.Value / right;
+    }
+    public static int operator %(StandartSize left, int right)
+    {
+        return left.Value % right;
+    }
+    public static int operator /(int left, StandartSize right)
+    {
+        return left / right.Value;
+    }
+    public static int operator %(int left, StandartSize right)
+    {
+        return left % right.Value;
+    }
 }
