@@ -1,48 +1,53 @@
-using System;
 using FeedEveryone.Service.Randomizing;
 
 namespace FeedEveryone.Service.WorldGeneration;
 
-public class SquareHeightMapDiamondSquareGenerator : IHeightMapGenerator
+public class SquareHeightMapDiamondSquareGenerator : HeightMapGeneratorBase
 {
 public SquareHeightMapDiamondSquareGenerator(
         IRandomProvider random,
         StandartSize size,
         float roughness = DEFAULT_ROUGHNESS
-    )
+    ) : base(size, size)
     {
         this.random = random;
-        this.size = size;
         this.roughness = roughness;
+        this.size = size;
     }
 
-    public HeightMap Generate()
+    protected override void GenerateHeights(HeightMap heightMap)
     {
-        empty = -size * 2 * roughness;
-        var square = new HeightMap(size, size, empty);
-        SetupCorners(square);
+        SetupCorners(heightMap);
         int side = size - 1;
         while(side > 1)
         {
-            DiamondSquareIteration(square, side);
+            DiamondSquareIteration(heightMap, side);
             side /= 2;
         }
-        return square;
+    }
+    
+    protected override HeightMap CreateEmptyMap()
+    {
+        return new HeightMap(size, size);
     }
 
     private void SetupCorners(HeightMap square)
     {
-        square[0, 0] = random.GetFloat(-size * roughness / 2,
-                                        size * roughness / 2);
-        square[0, square.Width - 1] =
-            random.GetFloat(-size * roughness / 2,
-                             size * roughness / 2);
-        square[square.Height - 1, 0] =
-            random.GetFloat(-size * roughness / 2,
-                             size * roughness / 2);
-        square[square.Height - 1, square.Width - 1] =
-            random.GetFloat(-size * roughness / 2,
-                             size * roughness / 2);
+        if(square[0, 0] == HeightMap.EMPTY_VALUE)
+            square[0, 0] = random.GetFloat(-size * roughness / 2,
+                                            size * roughness / 2);
+        if(square[0, square.Width - 1] == HeightMap.EMPTY_VALUE)
+            square[0, square.Width - 1] =
+                random.GetFloat(-size * roughness / 2,
+                                 size * roughness / 2);
+        if(square[square.Height - 1, 0] == HeightMap.EMPTY_VALUE)
+            square[square.Height - 1, 0] =
+                random.GetFloat(-size * roughness / 2,
+                                 size * roughness / 2);
+        if(square[square.Height - 1, square.Width - 1] == HeightMap.EMPTY_VALUE)
+            square[square.Height - 1, square.Width - 1] =
+                random.GetFloat(-size * roughness / 2,
+                                 size * roughness / 2);
     }
     private void DiamondSquareIteration(HeightMap square, int side)
     {
@@ -71,7 +76,7 @@ public SquareHeightMapDiamondSquareGenerator(
         int line, int col, HeightMap square, int step
     )
     {
-        if(square[line, col] != empty)
+        if(square[line, col] != HeightMap.EMPTY_VALUE)
             return square[line, col];
 
         float sum = CountNeighborsSum(line, col, square, step);
@@ -128,7 +133,7 @@ public SquareHeightMapDiamondSquareGenerator(
         int line, int col, HeightMap square, int step
     )
     {
-        if(square[line, col] != empty)
+        if(square[line, col] != HeightMap.EMPTY_VALUE)
             return square[line, col];
 
         float sum = square[line - step, col - step]
@@ -142,6 +147,4 @@ public SquareHeightMapDiamondSquareGenerator(
     private readonly int size;
     private readonly float roughness;
     private const float DEFAULT_ROUGHNESS = 1.0f;
-
-    private float empty;
 }

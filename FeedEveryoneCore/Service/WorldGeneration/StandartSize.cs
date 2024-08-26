@@ -1,5 +1,5 @@
 
-namespace FeedEveryoneCore.Service.WorldGeneration;
+namespace FeedEveryone.Service.WorldGeneration;
 
 public struct StandartSize : IComparable<StandartSize>
 {

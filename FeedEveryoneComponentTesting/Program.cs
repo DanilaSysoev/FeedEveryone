@@ -1,19 +1,38 @@
 ﻿using FeedEveryone.Service.Randomizing;
 using FeedEveryone.Service.WorldGeneration;
-using FeedEveryoneCore.Service.WorldGeneration;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 
-for(int i = 0; i < 10; ++i)
+for(int i = 0; i < 5; ++i)
 {
-    DiamondSquareHeightMapGenerator generator =
-        new DiamondSquareHeightMapGenerator(
-            new SystemRandomProvider(),
-            new StandartSize(128)
-        );
+    // TopDownDiamondSquareHeightMapGenerator generator =
+    //     new TopDownDiamondSquareHeightMapGenerator(
+    //         new SystemRandomProvider(),
+    //         1024
+    //     );
+    var first = new float[1025];
+    var last = new float[1025];
+    Array.Fill(first, 1025);
+    Array.Fill(last, -1025);
+    HeightMap pattern = new HeightMap(1025, 1025);
+    pattern.TopEdge = first;
+    pattern.BottomEdge = last;
 
-    var heightMap = generator.Generate(1024, 1024);
+    FrameBasedDiamondSquareHeightMapGenerator generator =
+    new FrameBasedDiamondSquareHeightMapGenerator(
+        new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 1024, 0.5f),
+        1024,
+        1024
+    );
+    generator.Setup(pattern);
+    // SquareHeightMapDiamondSquareGenerator generator =
+    // new SquareHeightMapDiamondSquareGenerator(
+    //     new SystemRandomProvider(),
+    //     1024
+    // );
+
+    var heightMap = generator.Generate();
     heightMap.Rescale(0.001f, 0.999f);
 
     using Image<Rgba32> image = new(heightMap.Width, heightMap.Height);
@@ -27,5 +46,5 @@ for(int i = 0; i < 10; ++i)
                                     255);
         }
     }
-    image.SaveAsPng($"output{i:0#}.png");
+    image.SaveAsPng($"output_temp{i:0#}.png");
 }

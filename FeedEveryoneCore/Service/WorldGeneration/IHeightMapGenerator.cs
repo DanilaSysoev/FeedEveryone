@@ -1,8 +1,10 @@
-using FeedEveryoneCore.Service.WorldGeneration;
-
 namespace FeedEveryone.Service.WorldGeneration;
 
 public interface IHeightMapGenerator
 {
-    HeightMap Generate(StandartSize height, StandartSize width);
+    void Setup(HeightMap preset);
+    HeightMap Generate();
+
+    int MapHeight { get; }
+    int MapWidth { get;}
 }

@@ -1,13 +1,19 @@
 
 
-namespace FeedEveryoneCore.Service.WorldGeneration;
+namespace FeedEveryone.Service.WorldGeneration;
 
 public class HeightMap
 {
-    public HeightMap(int height, int width, float value = DEFAULT_INIT_VALUE)
+    public HeightMap(int height, int width, float value = EMPTY_VALUE)
     {
         data = new float[height, width];
         Init(value);
+    }
+    public HeightMap(HeightMap prototype)
+    {
+        data = new float[prototype.data.GetLength(0),
+                         prototype.data.GetLength(1)];
+        Array.Copy(prototype.data, data, data.Length);
     }
 
     public int Height => data.GetLength(0);
@@ -106,5 +112,5 @@ public class HeightMap
     }
 
     private readonly float[,] data;
-    public const float DEFAULT_INIT_VALUE = 0;
+    public const float EMPTY_VALUE = float.NegativeInfinity;
 }
