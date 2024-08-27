@@ -1,6 +1,6 @@
 
 
-using FeedEveryoneCore.Exceptions;
+using FeedEveryone.Exceptions;
 
 namespace FeedEveryone.Service.WorldGeneration;
 
