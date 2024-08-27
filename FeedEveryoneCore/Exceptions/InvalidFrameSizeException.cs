@@ -1,4 +1,4 @@
-namespace FeedEveryoneCore.Exceptions;
+namespace FeedEveryone.Exceptions;
 
 public class InvalidFrameSizeException : Exception
 {

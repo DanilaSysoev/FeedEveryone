@@ -6,11 +6,6 @@ using SixLabors.ImageSharp.PixelFormats;
 
 for(int i = 0; i < 5; ++i)
 {
-    // TopDownDiamondSquareHeightMapGenerator generator =
-    //     new TopDownDiamondSquareHeightMapGenerator(
-    //         new SystemRandomProvider(),
-    //         1024
-    //     );
     var first = new float[1025];
     var last = new float[1025];
     Array.Fill(first, 1025);
@@ -26,11 +21,6 @@ for(int i = 0; i < 5; ++i)
         1024
     );
     generator.Setup(pattern);
-    // SquareHeightMapDiamondSquareGenerator generator =
-    // new SquareHeightMapDiamondSquareGenerator(
-    //     new SystemRandomProvider(),
-    //     1024
-    // );
 
     var heightMap = generator.Generate();
     heightMap.Rescale(0.001f, 0.999f);
