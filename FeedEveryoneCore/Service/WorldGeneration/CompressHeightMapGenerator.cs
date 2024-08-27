@@ -1,5 +1,5 @@
-using System;
 using FeedEveryone.Exceptions;
+using FeedEveryone.Service.Algorithms;
 
 namespace FeedEveryone.Service.WorldGeneration;
 
@@ -37,51 +37,24 @@ public class CompressHeightMapGenerator : HeightMapDecorator
         baseMap = heightMap;
         result = new HeightMap(MapHeight, MapWidth);
 
-        CompressSelection(
+        new ThinningSelection(
             MapHeight,
             BaseGenerator.MapHeight,
             SelectLine
-        );
+        ).Select();
 
         return result;
     }
 
     private void SelectLine(int line, int baseLine)
     {
-        CompressSelection(
+        new ThinningSelection(
             MapWidth,
             BaseGenerator.MapWidth,
             (column, baseColumn) => {
                 result[line, column] = baseMap[baseLine, baseColumn];
             }
-        );
-    }
-
-
-    private void CompressSelection(
-        int size,
-        int baseSize,
-        Action<int, int> selection
-    )
-    {
-        int rest = (baseSize - 1) % (size - 1);
-        int accum = baseSize;
-        for (int index = 0, baseIndex = 0; index < size; baseIndex++)
-        {
-            if(accum >= baseSize)
-            {
-                selection(index, baseIndex);
-
-                index++;
-                if (rest > 0)
-                {
-                    baseIndex++;
-                    rest--;
-                }
-                accum -= baseSize;
-            }
-            accum += size;
-        }
+        ).Select();
     }
 
     private readonly int mapHeight;
