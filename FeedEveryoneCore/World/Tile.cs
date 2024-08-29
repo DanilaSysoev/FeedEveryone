@@ -11,6 +11,16 @@ public class Tile
     public int Line => Position.Line;
     public int Column => Position.Column;
     
+    public Tile(Position position, Biome biome)
+    {
+        Position = position;
+        Biome = biome;
+    }
+    public Tile(int line, int column, Biome biome)
+    {
+        Position = new Position(line, column);
+        Biome = biome;
+    }
     
     public Settlement GetSettlement()
     {
@@ -38,17 +48,6 @@ public class Tile
         return HashCode.Combine(Position, Biome);
     }
 
-
-    public Tile(Position position, Biome biome)
-    {
-        Position = position;
-        Biome = biome;
-    }
-    public Tile(int line, int column, Biome biome)
-    {
-        Position = new Position(line, column);
-        Biome = biome;
-    }
     internal void DetachSettlement()
     {
         settlement = null;

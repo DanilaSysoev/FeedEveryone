@@ -2,7 +2,7 @@
 
 using FeedEveryone.Exceptions;
 
-namespace FeedEveryone.Service.WorldGeneration;
+namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
 public class FrameBasedDiamondSquareHeightMapGenerator
     : HeightMapGeneratorBase

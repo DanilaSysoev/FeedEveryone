@@ -1,7 +1,7 @@
 using FeedEveryone.Exceptions;
 using FeedEveryone.Service.Algorithms;
 
-namespace FeedEveryone.Service.WorldGeneration;
+namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
 public class CompressHeightMapGenerator : HeightMapDecorator
 {

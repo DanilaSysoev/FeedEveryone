@@ -1,6 +1,6 @@
 using FeedEveryone.World;
 
-namespace FeedEveryone.Service.WorldGeneration;
+namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
 public interface IWorldMapGenerator
 {

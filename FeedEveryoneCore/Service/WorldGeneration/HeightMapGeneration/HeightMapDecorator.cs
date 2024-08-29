@@ -1,4 +1,4 @@
-namespace FeedEveryone.Service.WorldGeneration;
+namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
 public abstract class HeightMapDecorator : IHeightMapGenerator
 {
