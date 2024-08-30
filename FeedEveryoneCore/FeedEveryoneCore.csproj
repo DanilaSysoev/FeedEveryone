@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Service/WorldGeneration/HeightMapGeneration/CompressHeightMapDecorator" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Service/WorldGeneration/HeightMapGeneration/CompressHeightMapDecorator" />
+  </ItemGroup>
+
 </Project>

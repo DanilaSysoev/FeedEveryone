@@ -4,10 +4,10 @@ using FeedEveryone.Exceptions;
 
 namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
-public class FrameBasedDiamondSquareHeightMapGenerator
+public class FrameBasedHeightMapGenerator
     : HeightMapGeneratorBase
 {
-    public FrameBasedDiamondSquareHeightMapGenerator(
+    public FrameBasedHeightMapGenerator(
         IHeightMapGenerator frameGenerator,
         StandartSize height,
         StandartSize width

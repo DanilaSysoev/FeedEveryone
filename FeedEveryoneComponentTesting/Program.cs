@@ -17,40 +17,40 @@ static internal class Program
     private static void Main(string[] args)
     {
 
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 10; ++i)
         {
-            var first = new float[1025];
-            var last = new float[1025];
-            Array.Fill(first, 1025);
-            Array.Fill(last, -1025);
-            HeightMap pattern = new HeightMap(1025, 1025);
-            pattern.TopEdge = first;
-            pattern.BottomEdge = last;
+            var first = new float[257];
+            var last = new float[257];
+            Array.Fill(first, 257);
+            Array.Fill(last, -257);
+            HeightMap pattern = new HeightMap(257, 257);
+            pattern.BottomEdge = first;
+            pattern.TopEdge = last;
 
-            FrameBasedDiamondSquareHeightMapGenerator temperature =
-            new FrameBasedDiamondSquareHeightMapGenerator(
-                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 1024, 0.5f),
-                1024,
-                1024
+            FrameBasedHeightMapGenerator temperature =
+            new FrameBasedHeightMapGenerator(
+                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 256, 0.5f),
+                256,
+                256
             );
             temperature.Setup(pattern);
-            FrameBasedDiamondSquareHeightMapGenerator height =
-            new FrameBasedDiamondSquareHeightMapGenerator(
-                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 256, 0.5f),
-                1024,
-                1024
+            FrameBasedHeightMapGenerator height =
+            new FrameBasedHeightMapGenerator(
+                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 32, 0.5f),
+                256,
+                256
             );
-            FrameBasedDiamondSquareHeightMapGenerator groundWater =
-            new FrameBasedDiamondSquareHeightMapGenerator(
-                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 1024, 0.5f),
-                1024,
-                1024
+            FrameBasedHeightMapGenerator groundWater =
+            new FrameBasedHeightMapGenerator(
+                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 256, 0.25f),
+                256,
+                256
             );
-            FrameBasedDiamondSquareHeightMapGenerator precipitation =
-            new FrameBasedDiamondSquareHeightMapGenerator(
-                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 1024, 0.5f),
-                1024,
-                1024
+            FrameBasedHeightMapGenerator precipitation =
+            new FrameBasedHeightMapGenerator(
+                new SquareHeightMapDiamondSquareGenerator(new SystemRandomProvider(), 256, 0.25f),
+                256,
+                256
             );
             var worldgen = new HeightMapBasedGenerator(
                 new DummyNameGenerator(),
@@ -88,7 +88,7 @@ static internal class Program
 
             }
         }
-        image.SaveAsPng($"output_world{i:0#}.png");
+        image.SaveAsPng($"output_world_small{i:0#}.png");
         return image;
     }
 

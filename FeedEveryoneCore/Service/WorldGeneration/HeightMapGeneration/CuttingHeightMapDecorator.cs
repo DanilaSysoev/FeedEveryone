@@ -2,14 +2,14 @@ using FeedEveryone.Exceptions;
 
 namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
-public class CuttingHeightMapGenerator : HeightMapDecorator
+public class CuttingHeightMapDecorator : HeightMapDecorator
 {
     public override int MapHeight => mapHeight;
     public override int MapWidth => mapWidth;
     public int StartLine { get; private set; }
     public int StartColumn { get; private set; }
 
-    public CuttingHeightMapGenerator(
+    public CuttingHeightMapDecorator(
         IHeightMapGenerator baseGenerator,
         int height,
         int width,

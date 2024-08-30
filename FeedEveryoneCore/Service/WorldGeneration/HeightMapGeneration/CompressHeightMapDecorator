@@ -3,12 +3,12 @@ using FeedEveryone.Service.Algorithms;
 
 namespace FeedEveryone.Service.WorldGeneration.HeightMapGeneration;
 
-public class CompressHeightMapGenerator : HeightMapDecorator
+public class CompressHeightMapDecorator : HeightMapDecorator
 {
     public override int MapHeight => mapHeight;
     public override int MapWidth => mapWidth;
 
-    public CompressHeightMapGenerator(
+    public CompressHeightMapDecorator(
         IHeightMapGenerator baseGenerator,
         int height,
         int width
