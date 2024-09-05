@@ -3,21 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryoneCore", "FeedEveryoneCore\FeedEveryoneCore.csproj", "{347DC49E-B89B-413F-BFDE-F40A757AC844}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryone.Core", "FeedEveryone.Core\FeedEveryone.Core.csproj", "{347DC49E-B89B-413F-BFDE-F40A757AC844}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryoneCoreTests", "FeedEveryoneCoreTests\FeedEveryoneCoreTests.csproj", "{CBD533F1-CC53-49C4-B6E2-963842F37962}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryone.CoreTests", "FeedEveryone.CoreTests\FeedEveryone.CoreTests.csproj", "{CBD533F1-CC53-49C4-B6E2-963842F37962}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryoneMono", "FeedEveryoneMono\FeedEveryoneMono.csproj", "{4F90E536-DC63-4E46-BE4F-9D3A41346467}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryone.Mono", "FeedEveryone.Mono\FeedEveryone.Mono.csproj", "{4F90E536-DC63-4E46-BE4F-9D3A41346467}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryoneComponentTesting", "FeedEveryoneComponentTesting\FeedEveryoneComponentTesting.csproj", "{2EDA5CD1-767D-47A9-A68F-4C19B6D21CB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedEveryone.ComponentTesting", "FeedEveryone.ComponentTesting\FeedEveryone.ComponentTesting.csproj", "{2EDA5CD1-767D-47A9-A68F-4C19B6D21CB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{347DC49E-B89B-413F-BFDE-F40A757AC844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +33,8 @@ Global
 		{2EDA5CD1-767D-47A9-A68F-4C19B6D21CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EDA5CD1-767D-47A9-A68F-4C19B6D21CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EDA5CD1-767D-47A9-A68F-4C19B6D21CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
