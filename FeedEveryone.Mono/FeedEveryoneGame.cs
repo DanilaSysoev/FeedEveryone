@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FeedEveryone.Mono.Components.Drawing;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,18 +9,25 @@ public class FeedEveryoneGame : Game
 {
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    Texture2D texture;
+    private readonly Camera camera;
 
     public FeedEveryoneGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        camera = new Camera(this);
     }
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        _graphics.IsFullScreen = false;
+        _graphics.PreferredBackBufferWidth = DefaultScreenWidth;
+        _graphics.PreferredBackBufferHeight = DefaultScreenHeight;
+        _graphics.ApplyChanges();
 
+        camera.Initialize();
         base.Initialize();
     }
 
@@ -27,7 +35,7 @@ public class FeedEveryoneGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
+        texture = Content.Load<Texture2D>("coffee_bag");
     }
 
     protected override void Update(GameTime gameTime)
@@ -35,7 +43,7 @@ public class FeedEveryoneGame : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        camera.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -43,9 +51,22 @@ public class FeedEveryoneGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        // TODO: Add your drawing code here
+        float cameraCoeff = camera.Height / _graphics.PreferredBackBufferHeight;
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(
+            texture,
+            new Rectangle(
+                -(int)(camera.Position.X / cameraCoeff),
+                -(int)(camera.Position.Y / cameraCoeff),
+                (int)(texture.Width / cameraCoeff),
+                (int)(texture.Height / cameraCoeff)
+            ),
+            Color.AliceBlue);
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
+
+    public const int DefaultScreenWidth = 1600;
+    public const int DefaultScreenHeight = 900;
 }
