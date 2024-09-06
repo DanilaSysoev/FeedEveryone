@@ -45,7 +45,8 @@ public class Camera : GameComponent
 
     public override string ToString()
     {
-        return $"Camera: [{Position.X}, {Position.Y}]";
+        return $"Camera: [{Position.X:0.00}, {Position.Y:0.00}]\n" +
+               $"Size: [{Width:0.00}, {Height:0.00}]";
     }
 
     public void MoveUp()
@@ -117,7 +118,7 @@ public class Camera : GameComponent
     }
 
     public const float DefaultAspectRatio = 16f / 9f;
-    public const float DefaultHeight = 1600f;
+    public const float DefaultHeight = 900;
     public const float DefaultRelativeSpeed = 0.3f;
     public const float DefaultRelativeZoomSpeed = 0.3f;
     public const float DefaultMoveSpeedUpCoeff = 3f;
