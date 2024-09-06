@@ -7,14 +7,15 @@ namespace FeedEveryoneMono;
 
 public class FeedEveryoneGame : Game
 {
-    private readonly GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    private readonly GraphicsDeviceManager graphics;
+    private SpriteBatch spriteBatch;
+    private SpriteFont font;
     Texture2D texture;
     private readonly Camera camera;
 
     public FeedEveryoneGame()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         camera = new Camera(this);
@@ -22,10 +23,10 @@ public class FeedEveryoneGame : Game
 
     protected override void Initialize()
     {
-        _graphics.IsFullScreen = false;
-        _graphics.PreferredBackBufferWidth = DefaultScreenWidth;
-        _graphics.PreferredBackBufferHeight = DefaultScreenHeight;
-        _graphics.ApplyChanges();
+        graphics.IsFullScreen = false;
+        graphics.PreferredBackBufferWidth = DefaultScreenWidth;
+        graphics.PreferredBackBufferHeight = DefaultScreenHeight;
+        graphics.ApplyChanges();
 
         camera.Initialize();
         base.Initialize();
@@ -33,9 +34,10 @@ public class FeedEveryoneGame : Game
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        spriteBatch = new SpriteBatch(GraphicsDevice);
 
         texture = Content.Load<Texture2D>("coffee_bag");
+        font = Content.Load<SpriteFont>("DebugFont");
     }
 
     protected override void Update(GameTime gameTime)
@@ -51,9 +53,9 @@ public class FeedEveryoneGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        float cameraCoeff = camera.Height / _graphics.PreferredBackBufferHeight;
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(
+        float cameraCoeff = camera.Height / graphics.PreferredBackBufferHeight;
+        spriteBatch.Begin();
+        spriteBatch.Draw(
             texture,
             new Rectangle(
                 -(int)(camera.Position.X / cameraCoeff),
@@ -62,7 +64,13 @@ public class FeedEveryoneGame : Game
                 (int)(texture.Height / cameraCoeff)
             ),
             Color.AliceBlue);
-        _spriteBatch.End();
+        spriteBatch.DrawString(
+            font,
+            camera.ToString(),
+            Vector2.Zero,
+            Color.Black
+        );
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }
