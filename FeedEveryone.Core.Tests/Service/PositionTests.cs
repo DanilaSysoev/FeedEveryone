@@ -3,7 +3,7 @@
 
 using FeedEveryone.Core.Service;
 
-namespace FeedEveryoneTests.Service;
+namespace FeedEveryone.Core.Tests.Service;
 
 public class PositionTests
 {

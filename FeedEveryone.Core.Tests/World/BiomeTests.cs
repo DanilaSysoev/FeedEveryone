@@ -1,6 +1,6 @@
 using FeedEveryone.Core.World;
 
-namespace FeedEveryoneTests.World;
+namespace FeedEveryone.Core.Tests.World;
 
 public class BiomeTests
 {
