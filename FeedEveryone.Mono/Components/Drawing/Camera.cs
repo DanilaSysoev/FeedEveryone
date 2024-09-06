@@ -95,12 +95,6 @@ public class Camera : GameComponent
     {
         Height += ZoomSpeedUpCoeff * CalculateZoom();
     }
-
-    public void MoveOn(float motionX, float motionY)
-    {
-        Position += new Vector2(motionX, motionY);
-        PositionCorrection();
-    }
     
     public void ZoomOn(float zoomValue)
     {
@@ -108,9 +102,16 @@ public class Camera : GameComponent
         HeightCorrection();
     }
 
+    public void MoveOn(float motionX, float motionY)
+    {
+        Position += new Vector2(motionX, motionY);
+        PositionCorrection();
+    }
+
     public void MoveOn(Vector2 motion)
     {
         Position += motion;
+        PositionCorrection();
     }
 
     public const float DefaultAspectRatio = 16f / 9f;
