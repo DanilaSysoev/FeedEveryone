@@ -17,6 +17,14 @@ public class Camera : GameComponent
     public float MoveSpeedUpCoeff { get; set; } = DefaultMoveSpeedUpCoeff;
     public float ZoomSpeedUpCoeff { get; set; } = DefaultZoomSpeedUpCoeff;
 
+    public float MaxXPosition { get; set; } = DefaultMaxXPosition;
+    public float MaxYPosition { get; set; } = DefaultMaxYPosition;
+    public float MinXPosition { get; set; } = DefaultMinXPosition;
+    public float MinYPosition { get; set; } = DefaultMinYPosition;
+
+    public float MaxHeight { get; set; } = DefaultMaxHeight;
+    public float MinHeight { get; set; } = DefaultMinHeight;
+
     public Camera(Game game) : base(game)
     {
         keyControllers = new List<KeyController>();
@@ -91,7 +99,15 @@ public class Camera : GameComponent
     public void MoveOn(float motionX, float motionY)
     {
         Position += new Vector2(motionX, motionY);
+        PositionCorrection();
     }
+    
+    public void ZoomOn(float zoomValue)
+    {
+        Height += zoomValue;
+        HeightCorrection();
+    }
+
     public void MoveOn(Vector2 motion)
     {
         Position += motion;
@@ -104,6 +120,14 @@ public class Camera : GameComponent
     public const float DefaultMoveSpeedUpCoeff = 3f;
     public const float DefaultZoomSpeedUpCoeff = 3f;
 
+    public const float DefaultMaxXPosition = 16f;
+    public const float DefaultMaxYPosition = 9f;
+    public const float DefaultMinXPosition = -16f;
+    public const float DefaultMinYPosition = -9f;
+
+    public const float DefaultMaxHeight = 160f;
+    public const float DefaultMinHeight = 16f;
+
 
     private float CalculateMotion()
     {
@@ -111,12 +135,27 @@ public class Camera : GameComponent
                Height *
                (float)_gameTime.ElapsedGameTime.TotalSeconds;
     }
-    
+
     private float CalculateZoom()
     {
         return RelativeZoomSpeed *
                Height *
                (float)_gameTime.ElapsedGameTime.TotalSeconds;
+    }
+
+    private void PositionCorrection()
+    {
+        float x = MathF.Max(MathF.Min(MaxXPosition, Position.X),
+                            MinXPosition);
+        float y = MathF.Max(MathF.Min(MaxYPosition, Position.Y),
+                            MinYPosition);
+        Position = new Vector2(x, y);
+    }
+
+    private void HeightCorrection()
+    {
+        Height = MathF.Min(Height, MaxHeight);
+        Height = MathF.Max(Height, MinHeight);
     }
 
     private void SetupController(Keys key, Action pressed, Action longPresssed)
