@@ -39,6 +39,8 @@ public class Camera : GameComponent
     public override void Update(GameTime gameTime)
     {
         _gameTime = gameTime;
+        foreach(var keyController in keyControllers)
+            keyController.Update(gameTime);
     }
 
     public override string ToString()
@@ -64,11 +66,11 @@ public class Camera : GameComponent
     }
     public void ZoomIn()
     {
-        Height -= CalculateZoom();
+        ZoomOn(-CalculateZoom());
     }
     public void ZoomOut()
     {
-        Height += CalculateZoom();
+        ZoomOn(CalculateZoom());
     }
     
     public void MoveUpSpeedy()
@@ -89,11 +91,11 @@ public class Camera : GameComponent
     }
     public void ZoomInSpeedy()
     {
-        Height -= ZoomSpeedUpCoeff * CalculateZoom();
+        ZoomOn(-ZoomSpeedUpCoeff * CalculateZoom());
     }
     public void ZoomOutSpeedy()
     {
-        Height += ZoomSpeedUpCoeff * CalculateZoom();
+        ZoomOn(ZoomSpeedUpCoeff * CalculateZoom());
     }
     
     public void ZoomOn(float zoomValue)
@@ -115,19 +117,19 @@ public class Camera : GameComponent
     }
 
     public const float DefaultAspectRatio = 16f / 9f;
-    public const float DefaultHeight = 16f;
+    public const float DefaultHeight = 1600f;
     public const float DefaultRelativeSpeed = 0.3f;
-    public const float DefaultRelativeZoomSpeed = 0.01f;
+    public const float DefaultRelativeZoomSpeed = 0.3f;
     public const float DefaultMoveSpeedUpCoeff = 3f;
     public const float DefaultZoomSpeedUpCoeff = 3f;
 
-    public const float DefaultMaxXPosition = 16f;
-    public const float DefaultMaxYPosition = 9f;
-    public const float DefaultMinXPosition = -16f;
-    public const float DefaultMinYPosition = -9f;
+    public const float DefaultMaxXPosition = 1600f;
+    public const float DefaultMaxYPosition = 900f;
+    public const float DefaultMinXPosition = -1600f;
+    public const float DefaultMinYPosition = -900f;
 
-    public const float DefaultMaxHeight = 160f;
-    public const float DefaultMinHeight = 16f;
+    public const float DefaultMaxHeight = 4800f;
+    public const float DefaultMinHeight = 320f;
 
 
     private float CalculateMotion()
