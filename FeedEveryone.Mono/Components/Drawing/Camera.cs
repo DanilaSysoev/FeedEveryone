@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace FeedEveryone.Mono.Components.Drawing;
 
-public class Camera : GameComponent
+public class Camera
 {
     public Vector2 Position { get; set; }
     public float Height { get; set; } = DefaultHeight;
@@ -25,18 +25,17 @@ public class Camera : GameComponent
     public float MaxHeight { get; set; } = DefaultMaxHeight;
     public float MinHeight { get; set; } = DefaultMinHeight;
 
-    public Camera(Game game) : base(game)
+    public Camera()
     {
         keyControllers = new List<KeyController>();
     }
 
-    public override void Initialize()
+    public void Initialize()
     {
-        base.Initialize();
         SetupControllers();
     }
 
-    public override void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         _gameTime = gameTime;
         foreach(var keyController in keyControllers)
@@ -164,7 +163,7 @@ public class Camera : GameComponent
 
     private void SetupController(Keys key, Action pressed, Action longPresssed)
     {
-        var keyController = new KeyController(key);
+        var keyController = new KeyController(Control.Keyboard.Instance, key);
         keyController.Pressed += pressed;
         keyController.LongPresssed += longPresssed;
         keyControllers.Add(keyController);
