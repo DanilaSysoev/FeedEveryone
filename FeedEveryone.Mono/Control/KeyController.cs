@@ -1,4 +1,5 @@
 using System;
+using FeedEveryone.Mono.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,7 +13,7 @@ public class KeyController
     public bool IsPressed => currentFrameState == KeyState.Down;
     public bool IsReleased => currentFrameState == KeyState.Up;
     public bool IsPressedOn => currentFrameState == KeyState.Down &&
-                               previousFrameState == KeyState.Up;
+                               (previousFrameState == KeyState.Up || previousFrameState is null);
     public bool IsReleasedOn => currentFrameState == KeyState.Up &&
                                 previousFrameState == KeyState.Down;
     public bool IsLongPressed => IsPressed &&
@@ -24,8 +25,9 @@ public class KeyController
     public event Action Release;
     public event Action LongPresssed;
 
-    public KeyController(Keys key)
+    public KeyController(IKeyboard keyboard, Keys key)
     {
+        this.keyboard = keyboard;
         Key = key;
     }
 
@@ -34,7 +36,7 @@ public class KeyController
         _gameTime = gameTime;
 
         previousFrameState = currentFrameState;
-        currentFrameState = Keyboard.GetState()[Key];
+        currentFrameState = keyboard.GetState(Key);
 
         if (IsPressedOn) pressTime = gameTime.TotalGameTime;
 
@@ -68,4 +70,6 @@ public class KeyController
     private KeyState? currentFrameState;
     private TimeSpan pressTime;
     private GameTime _gameTime;
+
+    private readonly IKeyboard keyboard;
 }

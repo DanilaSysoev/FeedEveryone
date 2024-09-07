@@ -18,7 +18,7 @@ public class FeedEveryoneGame : Game
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        camera = new Camera(this);
+        camera = new Camera();
     }
 
     protected override void Initialize()
