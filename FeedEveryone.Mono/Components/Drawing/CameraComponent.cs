@@ -7,7 +7,7 @@ namespace FeedEveryone.Mono.Components.Drawing;
 public class CameraComponent : GameComponent
 {
     public FeedEveryoneGame FeedEveryoneGame => Game as FeedEveryoneGame;
-    public Camera Instance {get; private set; }
+    public Camera Instance { get; private set; }
 
     public CameraComponent(FeedEveryoneGame game, Camera camera)
         : base(game)

@@ -52,10 +52,10 @@ public class FeedEveryoneGame : Game
         graphics.PreferredBackBufferHeight = DefaultScreenHeight;
         graphics.ApplyChanges();
 
-        Camera.Instance.MaxXPosition =
+        Camera.Instance.MaxRight =
             world.TileDescriptor.Width * world.WorldMap.Width;
-        Camera.Instance.MaxYPosition =
-            world.TileDescriptor.Height * world.WorldMap.Height * 3.0f / 4;
+        Camera.Instance.MaxBottom =
+            world.TileDescriptor.Width * world.WorldMap.Height * 3.0f / 4;
     }
 
     protected override void Update(GameTime gameTime)

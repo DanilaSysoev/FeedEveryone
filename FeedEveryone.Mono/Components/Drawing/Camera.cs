@@ -9,7 +9,7 @@ namespace FeedEveryone.Mono.Components.Drawing;
 public class Camera
 {
     public Vector2 Position { get; set; } =
-        new Vector2(DefaultMinXPosition, DefaultMinYPosition);
+        new Vector2(DefaultMinLeft, DefaultMinTop);
     public float Height { get; set; } = DefaultHeight;
     public float AspectRatio { get; set; } = DefaultAspectRatio;
     public float Width => Height * AspectRatio;
@@ -18,10 +18,10 @@ public class Camera
     public float MoveSpeedUpCoeff { get; set; } = DefaultMoveSpeedUpCoeff;
     public float ZoomSpeedUpCoeff { get; set; } = DefaultZoomSpeedUpCoeff;
 
-    public float MaxXPosition { get; set; } = DefaultMaxXPosition;
-    public float MaxYPosition { get; set; } = DefaultMaxYPosition;
-    public float MinXPosition { get; set; } = DefaultMinXPosition;
-    public float MinYPosition { get; set; } = DefaultMinYPosition;
+    public float MaxRight { get; set; } = DefaultMaxRight;
+    public float MaxBottom { get; set; } = DefaultMaxBottom;
+    public float MinLeft { get; set; } = DefaultMinLeft;
+    public float MinTop { get; set; } = DefaultMinTop;
 
     public float MaxHeight { get; set; } = DefaultMaxHeight;
     public float MinHeight { get; set; } = DefaultMinHeight;
@@ -104,6 +104,7 @@ public class Camera
     {
         Height += zoomValue;
         HeightCorrection();
+        PositionCorrection();
     }
 
     public void MoveOn(float motionX, float motionY)
@@ -159,10 +160,10 @@ public class Camera
     public const float DefaultMoveSpeedUpCoeff = 3f;
     public const float DefaultZoomSpeedUpCoeff = 3f;
 
-    public const float DefaultMaxXPosition = 256 * 256;
-    public const float DefaultMaxYPosition = 256 * 384f;
-    public const float DefaultMinXPosition = 0f;
-    public const float DefaultMinYPosition = 128f;
+    public const float DefaultMaxRight = 256 * 256;
+    public const float DefaultMaxBottom = 256 * 384f;
+    public const float DefaultMinLeft = 0f;
+    public const float DefaultMinTop = 0f;
 
     public const float DefaultMaxHeight = 5400f;
     public const float DefaultMinHeight = 320f;
@@ -184,10 +185,10 @@ public class Camera
 
     private void PositionCorrection()
     {
-        float x = MathF.Max(MathF.Min(MaxXPosition - Width, Position.X),
-                            MinXPosition);
-        float y = MathF.Max(MathF.Min(MaxYPosition - Height, Position.Y),
-                            MinYPosition);
+        float x = MathF.Max(MathF.Min(MaxRight - Width, Position.X),
+                            MinLeft);
+        float y = MathF.Max(MathF.Min(MaxBottom - Height, Position.Y),
+                            MinTop);
         Position = new Vector2(x, y);
     }
 

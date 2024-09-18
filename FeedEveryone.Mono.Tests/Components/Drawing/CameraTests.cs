@@ -19,10 +19,10 @@ public class CameraTests
         camera.RelativeZoomSpeed = 1;
         camera.MaxHeight = 90000;
         camera.MinHeight = 90;
-        camera.MinXPosition = -16000;
-        camera.MaxXPosition = 16000;
-        camera.MinYPosition = -9000;
-        camera.MaxYPosition = 9000;
+        camera.MinLeft = -16000;
+        camera.MaxRight = 16000;
+        camera.MinTop = -9000;
+        camera.MaxBottom = 9000;
         camera.MoveSpeedUpCoeff = 2;
         camera.ZoomSpeedUpCoeff = 2;
     }
@@ -41,7 +41,8 @@ public class CameraTests
     {
         camera.MoveOn(new Vector2(100000, 200000));
 
-        var newPos = new Vector2(camera.MaxXPosition, camera.MaxYPosition);
+        var newPos = new Vector2(camera.MaxRight - camera.Width,
+                                 camera.MaxBottom - camera.Height);
         Assert.That(camera.Position, Is.EqualTo(newPos));
     }
     [Test]
@@ -49,7 +50,7 @@ public class CameraTests
     {
         camera.MoveOn(new Vector2(-100000, -200000));
 
-        var newPos = new Vector2(camera.MinXPosition, camera.MinYPosition);
+        var newPos = new Vector2(camera.MinLeft, camera.MinTop);
         Assert.That(camera.Position, Is.EqualTo(newPos));
     }
 
@@ -261,5 +262,33 @@ public class CameraTests
 
         Assert.That(camera.WorldToScreen(1200, point), Is.EqualTo(new Point(27, 0)));
         Assert.That(camera.WorldToScreen(1200, rect), Is.EqualTo(new Rectangle(19, -20, 8, 9)));
+    }
+
+    [Test]
+    public void ZoomOut_ScaleWithOutOfRightBoundsY_PositionChanged()
+    {
+        camera.Position = new Vector2(0, camera.MaxBottom - camera.Height);
+        GameTime gameTime = new GameTime(
+            TimeSpan.Zero,
+            TimeSpan.FromSeconds(1)
+        );
+        camera.Update(gameTime);
+        camera.ZoomOut();
+        Assert.That(camera.Position,
+                    Is.EqualTo(new Vector2(0, camera.MaxBottom - camera.Height)));
+    }
+
+    [Test]
+    public void ZoomOut_ScaleWithOutOfRightBoundsX_PositionChanged()
+    {
+        camera.Position = new Vector2(camera.MaxRight - camera.Width, 0);
+        GameTime gameTime = new GameTime(
+            TimeSpan.Zero,
+            TimeSpan.FromSeconds(1)
+        );
+        camera.Update(gameTime);
+        camera.ZoomOut();
+        Assert.That(camera.Position,
+                    Is.EqualTo(new Vector2(camera.MaxRight - camera.Width, 0)));
     }
 }

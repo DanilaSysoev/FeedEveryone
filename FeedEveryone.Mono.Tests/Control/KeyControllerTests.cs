@@ -1,5 +1,4 @@
 using FeedEveryone.Mono.Control;
-using FeedEveryoneMono.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
