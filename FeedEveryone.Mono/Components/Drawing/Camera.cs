@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using FeedEveryoneMono.Control;
+using FeedEveryone.Mono.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,7 +8,8 @@ namespace FeedEveryone.Mono.Components.Drawing;
 
 public class Camera
 {
-    public Vector2 Position { get; set; }
+    public Vector2 Position { get; set; } =
+        new Vector2(DefaultMinXPosition, DefaultMinYPosition);
     public float Height { get; set; } = DefaultHeight;
     public float AspectRatio { get; set; } = DefaultAspectRatio;
     public float Width => Height * AspectRatio;
@@ -26,6 +27,7 @@ public class Camera
     public float MinHeight { get; set; } = DefaultMinHeight;
 
     public Camera()
+        : base()
     {
         keyControllers = new List<KeyController>();
     }
@@ -116,6 +118,40 @@ public class Camera
         PositionCorrection();
     }
 
+    public Vector2 WorldToScreen(int screenHeight, Vector2 point)
+    {
+        float camCoeff = screenHeight / Height;
+        return (point - Position) * camCoeff;
+    }
+    public Point WorldToScreen(int screenHeight, Point point)
+    {
+        float camCoeff = screenHeight / Height;
+        return new Point(
+            (int)MathF.Round((point.X - Position.X) * camCoeff),
+            (int)MathF.Round((point.Y - Position.Y) * camCoeff)
+        );
+    }
+    public Rectangle WorldToScreen(int screenHeight, Rectangle rectangle)
+    {
+        float camCoeff = screenHeight / Height;
+        return new Rectangle(
+            WorldToScreen(screenHeight, rectangle.Location),
+            new Point(
+                (int)MathF.Round(rectangle.Width * camCoeff),
+                (int)MathF.Round(rectangle.Height * camCoeff)
+            )
+        );
+    }
+    
+    public float Scale(int screenHeight, float value)
+    {
+        return value * screenHeight / Height;
+    }
+    public int Scale(int screenHeight, int value)
+    {
+        return (int)MathF.Round(value * screenHeight / Height);
+    }
+
     public const float DefaultAspectRatio = 16f / 9f;
     public const float DefaultHeight = 900;
     public const float DefaultRelativeSpeed = 0.3f;
@@ -123,12 +159,12 @@ public class Camera
     public const float DefaultMoveSpeedUpCoeff = 3f;
     public const float DefaultZoomSpeedUpCoeff = 3f;
 
-    public const float DefaultMaxXPosition = 1600f;
-    public const float DefaultMaxYPosition = 900f;
-    public const float DefaultMinXPosition = -1600f;
-    public const float DefaultMinYPosition = -900f;
+    public const float DefaultMaxXPosition = 256 * 256;
+    public const float DefaultMaxYPosition = 256 * 384f;
+    public const float DefaultMinXPosition = 0f;
+    public const float DefaultMinYPosition = 128f;
 
-    public const float DefaultMaxHeight = 4800f;
+    public const float DefaultMaxHeight = 5400f;
     public const float DefaultMinHeight = 320f;
 
 
@@ -148,9 +184,9 @@ public class Camera
 
     private void PositionCorrection()
     {
-        float x = MathF.Max(MathF.Min(MaxXPosition, Position.X),
+        float x = MathF.Max(MathF.Min(MaxXPosition - Width, Position.X),
                             MinXPosition);
-        float y = MathF.Max(MathF.Min(MaxYPosition, Position.Y),
+        float y = MathF.Max(MathF.Min(MaxYPosition - Height, Position.Y),
                             MinYPosition);
         Position = new Vector2(x, y);
     }

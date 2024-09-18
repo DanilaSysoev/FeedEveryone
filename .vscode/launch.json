@@ -11,9 +11,9 @@
             "request": "launch",
             "preLaunchTask": "build-mono",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/FeedEveryoneMono/bin/Debug/net8.0/FeedEveryoneMono.dll",
+            "program": "${workspaceFolder}/FeedEveryone.Mono/bin/Debug/net8.0/FeedEveryone.Mono.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/FeedEveryoneMono",
+            "cwd": "${workspaceFolder}/FeedEveryone.Mono",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
@@ -28,9 +28,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/FeedEveryoneCoreTests/bin/Debug/net6.0/FeedEveryoneCoreTests.dll",
+            "program": "${workspaceFolder}/FeedEveryone.Core.Tests/bin/Debug/net6.0/FeedEveryone.Core.Tests.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/FeedEveryoneCoreTests",
+            "cwd": "${workspaceFolder}/FeedEveryone.Core.Tests",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

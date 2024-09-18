@@ -40,7 +40,7 @@ public class FrameBasedHeightMapGenerator
                                                 frameGenerator.MapWidth - 1);
     }
 
-    private int CalculateSquarePosition(
+    private static int CalculateSquarePosition(
         int squareIndex, StandartSize frameSize
     )
     {
@@ -59,7 +59,7 @@ public class FrameBasedHeightMapGenerator
                     GenerateFrame(heightMap, new Position(line, column));
     }
 
-    private int CalculateFramesSize(
+    private static int CalculateFramesSize(
         StandartSize mapSize, StandartSize frameSize
     )
     {
@@ -215,12 +215,12 @@ public class FrameBasedHeightMapGenerator
                squares[position.Line - 1, position.Column] is not null;
     }
 
-    private bool ExistLineInMap(HeightMap heightMap, int line)
+    private static bool ExistLineInMap(HeightMap heightMap, int line)
     {
         return heightMap[line, 0] != HeightMap.EMPTY_VALUE;
     }
 
-    private bool ExistColumnInMap(HeightMap heightMap, int column)
+    private static bool ExistColumnInMap(HeightMap heightMap, int column)
     {
         return heightMap[0, column] != HeightMap.EMPTY_VALUE;
     }

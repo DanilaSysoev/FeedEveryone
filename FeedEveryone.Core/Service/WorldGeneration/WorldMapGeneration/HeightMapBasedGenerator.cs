@@ -1,7 +1,8 @@
 using FeedEveryone.Core.Exceptions;
+using FeedEveryone.Core.Service.WorldGeneration.HeightMapGeneration;
 using FeedEveryone.Core.World;
 
-namespace FeedEveryone.Core.Service.WorldGeneration.HeightMapGeneration;
+namespace FeedEveryone.Core.Service.WorldGeneration.WorldMapGeneration;
 
 public class HeightMapBasedGenerator : IWorldMapGenerator
 {

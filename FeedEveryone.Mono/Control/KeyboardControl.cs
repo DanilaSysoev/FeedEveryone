@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 
-namespace FeedEveryoneMono.Control;
+namespace FeedEveryone.Mono.Control;
 
 public static class KeyboardControl
 {

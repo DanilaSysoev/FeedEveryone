@@ -1,9 +1,8 @@
 using System;
-using FeedEveryone.Mono.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace FeedEveryoneMono.Control;
+namespace FeedEveryone.Mono.Control;
 
 public class KeyController
 {

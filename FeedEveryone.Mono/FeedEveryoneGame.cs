@@ -1,4 +1,8 @@
-﻿using FeedEveryone.Mono.Components.Drawing;
+﻿using FeedEveryone.Core.Service.WorldGeneration.WorldMapGeneration;
+using FeedEveryone.Mono.Builders;
+using FeedEveryone.Mono.Components;
+using FeedEveryone.Mono.Components.Drawing;
+using FeedEveryone.Mono.Components.TileProcessing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -7,37 +11,51 @@ namespace FeedEveryoneMono;
 
 public class FeedEveryoneGame : Game
 {
-    private readonly GraphicsDeviceManager graphics;
-    private SpriteBatch spriteBatch;
-    private SpriteFont font;
-    Texture2D texture;
-    private readonly Camera camera;
+    public CameraComponent Camera => cameraComponent;
+    public int ScreenHeight => graphics.PreferredBackBufferHeight;
+    public int ScreenWidth => graphics.PreferredBackBufferWidth;
+    public WorldComponent World => world;
 
-    public FeedEveryoneGame()
+    private readonly GraphicsDeviceManager graphics;
+
+    public FeedEveryoneGame(
+        IBuilder<IWorldMapGenerator> worldGeneratorBuilder,
+        IBuilder<ITileDescriptor> tileDescriptorBuilder,
+        IBuilder<ITileTextureSelector> tileTextureSelectorBuilder
+    )
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        camera = new Camera();
+
+        cameraComponent = new CameraComponent(
+            this,
+            new Camera()
+        );
+        world = new WorldComponent(
+            this,
+            worldGeneratorBuilder.Build(),
+            tileDescriptorBuilder.Build(),
+            tileTextureSelectorBuilder.Build()
+        );
+        
+        Components.Add(cameraComponent);
+        Components.Add(world);
     }
 
     protected override void Initialize()
     {
+        base.Initialize();
+
         graphics.IsFullScreen = false;
         graphics.PreferredBackBufferWidth = DefaultScreenWidth;
         graphics.PreferredBackBufferHeight = DefaultScreenHeight;
         graphics.ApplyChanges();
 
-        camera.Initialize();
-        base.Initialize();
-    }
-
-    protected override void LoadContent()
-    {
-        spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        texture = Content.Load<Texture2D>("coffee_bag");
-        font = Content.Load<SpriteFont>("DebugFont");
+        Camera.Instance.MaxXPosition =
+            world.TileDescriptor.Width * world.WorldMap.Width;
+        Camera.Instance.MaxYPosition =
+            world.TileDescriptor.Height * world.WorldMap.Height * 3.0f / 4;
     }
 
     protected override void Update(GameTime gameTime)
@@ -45,36 +63,18 @@ public class FeedEveryoneGame : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        camera.Update(gameTime);
-
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        float cameraCoeff = camera.Height / graphics.PreferredBackBufferHeight;
-        spriteBatch.Begin();
-        spriteBatch.Draw(
-            texture,
-            new Rectangle(
-                -(int)(camera.Position.X / cameraCoeff),
-                -(int)(camera.Position.Y / cameraCoeff),
-                (int)(texture.Width / cameraCoeff),
-                (int)(texture.Height / cameraCoeff)
-            ),
-            Color.AliceBlue);
-        spriteBatch.DrawString(
-            font,
-            camera.ToString(),
-            Vector2.Zero,
-            Color.Black
-        );
-        spriteBatch.End();
-
         base.Draw(gameTime);
     }
 
     public const int DefaultScreenWidth = 1600;
     public const int DefaultScreenHeight = 900;
+
+    private readonly CameraComponent cameraComponent;
+    private readonly WorldComponent world;
 }
