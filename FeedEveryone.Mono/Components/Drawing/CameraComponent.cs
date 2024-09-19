@@ -39,6 +39,20 @@ public class CameraComponent : GameComponent
     {
         return Instance.WorldToScreen(FeedEveryoneGame.ScreenHeight, rectangle);
     }
+
+    public Vector2 ScreenToWorld(Vector2 point)
+    {
+        return Instance.ScreenToWorld(FeedEveryoneGame.ScreenHeight, point);
+    }
+    public Point ScreenToWorld(Point point)
+    {
+        return Instance.ScreenToWorld(FeedEveryoneGame.ScreenHeight, point);
+    }
+    public Rectangle ScreenToWorld(Rectangle rectangle)
+    {
+        return Instance.ScreenToWorld(FeedEveryoneGame.ScreenHeight, rectangle);
+    }
+
     public int Scale(int value)
     {
         return Instance.Scale(FeedEveryoneGame.ScreenHeight, value);

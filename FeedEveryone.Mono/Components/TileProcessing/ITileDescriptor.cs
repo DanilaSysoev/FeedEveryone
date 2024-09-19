@@ -21,4 +21,9 @@ public interface ITileDescriptor
     Rectangle MoveOnNextLine(Rectangle currentRectangle, int tileLine);
     Rectangle MoveOnNextColumn(Rectangle currentRectangle);
 
+    Position GetTileAtPoint(Point point)
+    {
+        return GetTileAtPoint(point.X, point.Y);
+    }
+    Position GetTileAtPoint(int x, int y);
 }

@@ -37,7 +37,8 @@ public class KeyController
         previousFrameState = currentFrameState;
         currentFrameState = keyboard.GetState(Key);
 
-        if (IsPressedOn) pressTime = gameTime.TotalGameTime;
+        if (IsPressedOn)
+            pressTime = gameTime.TotalGameTime;
 
         InvokeEvents();
     }
@@ -47,8 +48,10 @@ public class KeyController
 
     private void InvokeEvents()
     {
-        if (IsPressedOn) Press?.Invoke();
-        if (IsReleasedOn) Release?.Invoke();
+        if (IsPressedOn)
+            Press?.Invoke();
+        if (IsReleasedOn)
+            Release?.Invoke();
         if (IsPressed)
         {
             if (IsLongPressed && LongPresssed is not null)

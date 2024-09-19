@@ -42,6 +42,8 @@ public class WorldComponent : DrawableGameComponent
 
         WorldMap = mapGenerator.Generate();
         WorldSize = new WorldUnitSize(WorldMap.Height, WorldMap.Width);
+        lastDrawRectangles = new Rectangle[WorldMap.Height, WorldMap.Width];
+
         tilesRectsAndTextures = new WorldMapTilesRectanglesAndTextures(
             WorldMap,
             tileTextureSelector
@@ -67,6 +69,16 @@ public class WorldComponent : DrawableGameComponent
         DrawTiles(CorrectionArea(drawingArea));
         spriteBatch.End();
     }
+
+    public Rectangle GetLastDrawRectangleOfTile(int line, int column)
+    {
+        return lastDrawRectangles[line, column];
+    }
+    public Rectangle GetLastDrawRectangleOfTile(Position position)
+    {
+        return GetLastDrawRectangleOfTile(position.Line, position.Column);
+    }
+
 
     private Rectangle CorrectionArea(Rectangle drawingArea)
     {
@@ -112,6 +124,7 @@ public class WorldComponent : DrawableGameComponent
             tilesRectsAndTextures.GetTextureArea(line, col),
             Color.White
         );
+        lastDrawRectangles[line, col] = drawRect;
     }
 
     private Rectangle GetScreenRectOfTile(int line, int col)
@@ -127,7 +140,7 @@ public class WorldComponent : DrawableGameComponent
     private readonly ITileDescriptor tileDescriptor;
     private readonly ITileTextureSelector tileTextureSelector;
     private WorldMapTilesRectanglesAndTextures tilesRectsAndTextures = null!;
-
+    private Rectangle[,] lastDrawRectangles = null!;
     private SpriteBatch spriteBatch;
 
     private const int AdditionBorderTiles = 4;

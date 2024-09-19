@@ -119,6 +119,31 @@ public class Camera
         PositionCorrection();
     }
 
+    public Vector2 ScreenToWorld(int screenHeight, Vector2 point)
+    {
+        float camCoeff = screenHeight / Height;
+        return (point / camCoeff) + Position;
+    }
+    public Point ScreenToWorld(int screenHeight, Point point)
+    {
+        float camCoeff = screenHeight / Height;
+        return new Point(
+            (int)MathF.Round(point.X / camCoeff + Position.X),
+            (int)MathF.Round(point.Y / camCoeff + Position.Y)
+        );
+    }
+    public Rectangle ScreenToWorld(int screenHeight, Rectangle rectangle)
+    {
+        float camCoeff = screenHeight / Height;
+        return new Rectangle(
+            ScreenToWorld(screenHeight, rectangle.Location),
+            new Point(
+                (int)MathF.Round(rectangle.Width / camCoeff),
+                (int)MathF.Round(rectangle.Height / camCoeff)
+            )
+        );
+    }
+
     public Vector2 WorldToScreen(int screenHeight, Vector2 point)
     {
         float camCoeff = screenHeight / Height;

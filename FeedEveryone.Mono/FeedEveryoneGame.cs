@@ -15,6 +15,7 @@ public class FeedEveryoneGame : Game
     public int ScreenHeight => graphics.PreferredBackBufferHeight;
     public int ScreenWidth => graphics.PreferredBackBufferWidth;
     public WorldComponent World => world;
+    public TileSelector TileSelector => tileSelector;
 
     private readonly GraphicsDeviceManager graphics;
 
@@ -28,20 +29,18 @@ public class FeedEveryoneGame : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
-        cameraComponent = new CameraComponent(
-            this,
-            new Camera()
-        );
-        world = new WorldComponent(
-            this,
-            worldGeneratorBuilder.Build(),
-            tileDescriptorBuilder.Build(),
-            tileTextureSelectorBuilder.Build()
-        );
-        
+        CreateCameraComponent();
+        CreateWorldComponent(worldGeneratorBuilder,
+                             tileDescriptorBuilder,
+                             tileTextureSelectorBuilder);
+        CreateTileSelector(tileDescriptorBuilder);
+
         Components.Add(cameraComponent);
         Components.Add(world);
+        Components.Add(tileSelector);
     }
+
+    
 
     protected override void Initialize()
     {
@@ -72,9 +71,56 @@ public class FeedEveryoneGame : Game
         base.Draw(gameTime);
     }
 
+    private void CreateTileSelector(
+        IBuilder<ITileDescriptor> tileDescriptorBuilder
+    )
+    {
+        tileSelector = new TileSelector(
+            this,
+            tileDescriptorBuilder.Build()
+        )
+        {
+            DrawOrder = TileSelectorDrawingOrder,
+            UpdateOrder = TileSelectorUpdateOrder
+        };
+    }
+
+    private void CreateWorldComponent(
+        IBuilder<IWorldMapGenerator> worldGeneratorBuilder,
+        IBuilder<ITileDescriptor> tileDescriptorBuilder,
+        IBuilder<ITileTextureSelector> tileTextureSelectorBuilder
+    )
+    {
+        world = new WorldComponent(
+            this,
+            worldGeneratorBuilder.Build(),
+            tileDescriptorBuilder.Build(),
+            tileTextureSelectorBuilder.Build()
+        )
+        {
+            DrawOrder = MapDrawingOrder,
+            UpdateOrder = MapUpdateOrder
+        };
+    }
+
+    private void CreateCameraComponent()
+    {
+        cameraComponent = new CameraComponent(
+            this,
+            new Camera()
+        );
+    }
+
     public const int DefaultScreenWidth = 1600;
     public const int DefaultScreenHeight = 900;
 
-    private readonly CameraComponent cameraComponent;
-    private readonly WorldComponent world;
+    private CameraComponent cameraComponent;
+    private WorldComponent world;
+    private TileSelector tileSelector;
+
+    private const int MapDrawingOrder = 0;
+    private const int TileSelectorDrawingOrder = 64;
+
+    private const int MapUpdateOrder = 0;
+    private const int TileSelectorUpdateOrder = 64;
 }

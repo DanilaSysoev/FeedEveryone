@@ -154,7 +154,7 @@ public class CameraTests
 
 
     [Test]
-    public void WorldToScreen_ScaleLessThanOnePosZero_ReturnsSame()
+    public void WorldToScreen_ScaleLessThanOnePosZero_ReturnsCorrect()
     {
         Point point = new Point(10, 20);
         Rectangle rect = new Rectangle(4, 5, 6, 7);
@@ -210,7 +210,7 @@ public class CameraTests
 
 
     [Test]
-    public void WorldToScreen_ScaleScaleGreaterThanOnePosZero_ReturnsSame()
+    public void WorldToScreen_ScaleScaleGreaterThanOnePosZero_ReturnsCorrect()
     {
         Point point = new Point(10, 20);
         Rectangle rect = new Rectangle(4, 5, 6, 7);
@@ -290,5 +290,184 @@ public class CameraTests
         camera.ZoomOut();
         Assert.That(camera.Position,
                     Is.EqualTo(new Vector2(camera.MaxRight - camera.Width, 0)));
+    }
+
+   
+   
+    [Test]
+    public void ScreenToWorld_ScaleEqualsOnePosZero_ReturnsSame()
+    {
+        Point point = new Point(10, 20);
+        Vector2 pos = new Vector2(1, 2);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+        camera.Position = Vector2.Zero;
+
+        Assert.That(camera.ScreenToWorld(900, point), Is.EqualTo(point));
+        Assert.That(camera.ScreenToWorld(900, pos), Is.EqualTo(pos));
+        Assert.That(camera.ScreenToWorld(900, rect), Is.EqualTo(rect));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleEqualsOnePosPosXPosY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Vector2 pos = new Vector2(1, 2);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(10, 20);
+
+        Assert.That(camera.ScreenToWorld(900, point), Is.EqualTo(new Point(20, 40)));
+        Assert.That(camera.ScreenToWorld(900, pos), Is.EqualTo(new Vector2(11, 22)));
+        Assert.That(camera.ScreenToWorld(900, rect), Is.EqualTo(new Rectangle(14, 25, 6, 7)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleEqualsOnePosPosXNegY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Vector2 pos = new Vector2(1, 2);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(10, -20);
+
+        Assert.That(camera.ScreenToWorld(900, point), Is.EqualTo(new Point(20, 0)));
+        Assert.That(camera.ScreenToWorld(900, pos), Is.EqualTo(new Vector2(11, -18)));
+        Assert.That(camera.ScreenToWorld(900, rect), Is.EqualTo(new Rectangle(14, -15, 6, 7)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleEqualsOnePosNegXNegY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Vector2 pos = new Vector2(1, 2);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(-10, -20);
+
+        Assert.That(camera.ScreenToWorld(900, point), Is.EqualTo(new Point(0, 0)));
+        Assert.That(camera.ScreenToWorld(900, pos), Is.EqualTo(new Vector2(-9, -18)));
+        Assert.That(camera.ScreenToWorld(900, rect), Is.EqualTo(new Rectangle(-6, -15, 6, 7)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleEqualsOnePosNegXPosY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Vector2 pos = new Vector2(1, 2);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(-10, 20);
+
+        Assert.That(camera.ScreenToWorld(900, point), Is.EqualTo(new Point(0, 40)));
+        Assert.That(camera.ScreenToWorld(900, pos), Is.EqualTo(new Vector2(-9, 22)));
+        Assert.That(camera.ScreenToWorld(900, rect), Is.EqualTo(new Rectangle(-6, 25, 6, 7)));
+    }
+
+
+    [Test]
+    public void ScreenToWorld_ScaleLessThanOnePosZero_ReturnsCorrecr()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+        camera.Position = Vector2.Zero;
+
+        Assert.That(camera.ScreenToWorld(450, point), Is.EqualTo(new Point(20, 40)));
+        Assert.That(camera.ScreenToWorld(450, rect), Is.EqualTo(new Rectangle(8, 10, 12, 14)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleLessThanOnePosPosXPosY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(10, 20);
+
+        Assert.That(camera.ScreenToWorld(450, point), Is.EqualTo(new Point(30, 60)));
+        Assert.That(camera.ScreenToWorld(450, rect), Is.EqualTo(new Rectangle(18, 30, 12, 14)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleLessThanOnePosPosXNegY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(10, -20);
+
+        Assert.That(camera.ScreenToWorld(450, point), Is.EqualTo(new Point(30, 20)));
+        Assert.That(camera.ScreenToWorld(450, rect), Is.EqualTo(new Rectangle(18, -10, 12, 14)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleLessThanOnePosNegXNegY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(-10, -20);
+
+        Assert.That(camera.ScreenToWorld(450, point), Is.EqualTo(new Point(10, 20)));
+        Assert.That(camera.ScreenToWorld(450, rect), Is.EqualTo(new Rectangle(-2, -10, 12, 14)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleLessThanOnePosNegXPosY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(-10, 20);
+
+        Assert.That(camera.ScreenToWorld(450, point), Is.EqualTo(new Point(10, 60)));
+        Assert.That(camera.ScreenToWorld(450, rect), Is.EqualTo(new Rectangle(-2, 30, 12, 14)));
+    }
+
+
+    [Test]
+    public void ScreenToWorld_ScaleScaleGreaterThanOnePosZero_ReturnsSame()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+        camera.Position = Vector2.Zero;
+
+        Assert.That(camera.ScreenToWorld(1200, point), Is.EqualTo(new Point(8, 15)));
+        Assert.That(camera.ScreenToWorld(1200, rect), Is.EqualTo(new Rectangle(3, 4, 4, 5)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleScaleGreaterThanOnePosPosXPosY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(10, 20);
+
+        Assert.That(camera.ScreenToWorld(1200, point), Is.EqualTo(new Point(18, 35)));
+        Assert.That(camera.ScreenToWorld(1200, rect), Is.EqualTo(new Rectangle(13, 24, 4, 5)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleScaleGreaterThanOnePosPosXNegY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(10, -20);
+
+        Assert.That(camera.ScreenToWorld(1200, point), Is.EqualTo(new Point(18, -5)));
+        Assert.That(camera.ScreenToWorld(1200, rect), Is.EqualTo(new Rectangle(13, -16, 4, 5)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleScaleGreaterThanOnePosNegXNegY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(-10, -20);
+
+        Assert.That(camera.ScreenToWorld(1200, point), Is.EqualTo(new Point(-2, -5)));
+        Assert.That(camera.ScreenToWorld(1200, rect), Is.EqualTo(new Rectangle(-7, -16, 4, 5)));
+    }
+    [Test]
+    public void ScreenToWorld_ScaleScaleGreaterThanOnePosNegXPosY_ReturnsCorrect()
+    {
+        Point point = new Point(10, 20);
+        Rectangle rect = new Rectangle(4, 5, 6, 7);
+
+        camera.Position = new Vector2(-10, 20);
+
+        Assert.That(camera.ScreenToWorld(1200, point), Is.EqualTo(new Point(-2, 35)));
+        Assert.That(camera.ScreenToWorld(1200, rect), Is.EqualTo(new Rectangle(-7, 24, 4, 5)));
     }
 }
