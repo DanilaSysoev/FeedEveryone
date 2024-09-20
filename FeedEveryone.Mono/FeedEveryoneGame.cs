@@ -15,7 +15,7 @@ public class FeedEveryoneGame : Game
     public int ScreenHeight => graphics.PreferredBackBufferHeight;
     public int ScreenWidth => graphics.PreferredBackBufferWidth;
     public WorldComponent World => world;
-    public TileSelector TileSelector => tileSelector;
+    public TileSelectorComponent TileSelector => tileSelector;
 
     private readonly GraphicsDeviceManager graphics;
 
@@ -75,7 +75,7 @@ public class FeedEveryoneGame : Game
         IBuilder<ITileDescriptor> tileDescriptorBuilder
     )
     {
-        tileSelector = new TileSelector(
+        tileSelector = new TileSelectorComponent(
             this,
             tileDescriptorBuilder.Build()
         )
@@ -116,7 +116,7 @@ public class FeedEveryoneGame : Game
 
     private CameraComponent cameraComponent;
     private WorldComponent world;
-    private TileSelector tileSelector;
+    private TileSelectorComponent tileSelector;
 
     private const int MapDrawingOrder = 0;
     private const int TileSelectorDrawingOrder = 64;

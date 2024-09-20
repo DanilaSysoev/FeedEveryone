@@ -1,8 +1,8 @@
-using FeedEveryone.Core.Service;
 using FeedEveryone.Core.Service.WorldGeneration.WorldMapGeneration;
 using FeedEveryone.Core.World;
 using FeedEveryone.Mono.Components.Service;
 using FeedEveryone.Mono.Components.TileProcessing;
+using FeedEveryone.Mono.Extensions;
 using FeedEveryoneMono;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -42,7 +42,6 @@ public class WorldComponent : DrawableGameComponent
 
         WorldMap = mapGenerator.Generate();
         WorldSize = new WorldUnitSize(WorldMap.Height, WorldMap.Width);
-        lastDrawRectangles = new Rectangle[WorldMap.Height, WorldMap.Width];
 
         tilesRectsAndTextures = new WorldMapTilesRectanglesAndTextures(
             WorldMap,
@@ -70,15 +69,6 @@ public class WorldComponent : DrawableGameComponent
         spriteBatch.End();
     }
 
-    public Rectangle GetLastDrawRectangleOfTile(int line, int column)
-    {
-        return lastDrawRectangles[line, column];
-    }
-    public Rectangle GetLastDrawRectangleOfTile(Position position)
-    {
-        return GetLastDrawRectangleOfTile(position.Line, position.Column);
-    }
-
 
     private Rectangle CorrectionArea(Rectangle drawingArea)
     {
@@ -97,39 +87,29 @@ public class WorldComponent : DrawableGameComponent
 
     private void DrawTiles(Rectangle area)
     {
-        var drawRect = GetScreenRectOfTile(area.Y, area.X);
         for(int line = area.Y; line < area.Y + area.Height; ++line)
-        {
-            DrawLineOfTiles(line, area, drawRect);
-            drawRect = tileDescriptor.MoveOnNextLine(drawRect, line);
-        }
+            DrawLineOfTiles(line, area);
     }
 
-    private void DrawLineOfTiles(
-        int line, Rectangle area, Rectangle drawingRectangle
-    )
+    private void DrawLineOfTiles(int line, Rectangle area)
     {
         for (int col = area.X; col < area.X + area.Width; ++col)
-        {
-            DrawTile(line, col, drawingRectangle);
-            drawingRectangle = tileDescriptor.MoveOnNextColumn(drawingRectangle);
-        }
+            DrawTile(line, col);
     }
 
-    private void DrawTile(int line, int col, Rectangle drawRect)
+    private void DrawTile(int line, int col)
     {
         spriteBatch.Draw(
             tilesRectsAndTextures.GetTexture(line, col),
-            drawRect,
+            GetScreenRectOfTile(line, col).Expand(1),
             tilesRectsAndTextures.GetTextureArea(line, col),
             Color.White
         );
-        lastDrawRectangles[line, col] = drawRect;
     }
 
     private Rectangle GetScreenRectOfTile(int line, int col)
     {
-        var tileWorldRect = tileDescriptor.GetWorldDrawingRectangle(line, col);
+        var tileWorldRect = tileDescriptor.GetWorldRectangle(line, col);
         var screenRect = FeedEveryoneGame.Camera.WorldToScreen(tileWorldRect);
         return screenRect;
     }
@@ -140,7 +120,6 @@ public class WorldComponent : DrawableGameComponent
     private readonly ITileDescriptor tileDescriptor;
     private readonly ITileTextureSelector tileTextureSelector;
     private WorldMapTilesRectanglesAndTextures tilesRectsAndTextures = null!;
-    private Rectangle[,] lastDrawRectangles = null!;
     private SpriteBatch spriteBatch;
 
     private const int AdditionBorderTiles = 4;

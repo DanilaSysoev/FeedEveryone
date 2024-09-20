@@ -1,4 +1,3 @@
-using FeedEveryone.Core.Service;
 using FeedEveryone.Mono.Components.TileProcessing;
 using FeedEveryoneMono;
 using Microsoft.Xna.Framework;
@@ -7,11 +6,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace FeedEveryone.Mono.Components;
 
-public class TileSelector : DrawableGameComponent
+public class TileSelectorComponent : DrawableGameComponent
 {
     public FeedEveryoneGame FeedEveryoneGame => Game as FeedEveryoneGame;
 
-    public TileSelector(
+    public TileSelectorComponent(
         FeedEveryoneGame game,
         ITileDescriptor tileDescriptor
     ) : base(game)
@@ -29,44 +28,25 @@ public class TileSelector : DrawableGameComponent
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        var tilePos = tileDescriptor.GetTileAtPoint(
-            FeedEveryoneGame.Camera.ScreenToWorld(
-                Mouse.GetState().Position
-            )
-        );
-        if (InsideTheWorld(tilePos))
-        {
-            tileRectangle =
-                FeedEveryoneGame.World.GetLastDrawRectangleOfTile(
+        tileRectangle =
+            FeedEveryoneGame.Camera.WorldToScreen(
+                tileDescriptor.GetWorldRectangle(
                     tileDescriptor.GetTileAtPoint(
                         FeedEveryoneGame.Camera.ScreenToWorld(
                             Mouse.GetState().Position
                         )
                     )
-                );
-        }
-        else
-            tileRectangle = null;
+                )
+            );
     }
 
     public override void Draw(GameTime gameTime)
     {
-        if(tileRectangle.HasValue)
-        {
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                selectorTexture, tileRectangle.Value, Color.White
-            );
-            spriteBatch.End();
-        }
-    }
-
-    private bool InsideTheWorld(Position tilePos)
-    {
-        return tilePos.Line >= 0 &&
-               tilePos.Column >= 0 &&
-               tilePos.Line < FeedEveryoneGame.World.WorldMap.Height &&
-               tilePos.Column < FeedEveryoneGame.World.WorldMap.Width;
+        spriteBatch.Begin();
+        spriteBatch.Draw(
+            selectorTexture, tileRectangle, Color.White
+        );
+        spriteBatch.End();
     }
 
 
@@ -74,5 +54,5 @@ public class TileSelector : DrawableGameComponent
 
     private SpriteBatch spriteBatch;
     private Texture2D selectorTexture;
-    private Rectangle? tileRectangle;
+    private Rectangle tileRectangle;
 }

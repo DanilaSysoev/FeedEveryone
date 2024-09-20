@@ -8,22 +8,19 @@ public interface ITileDescriptor
     int Height { get; }
     int Width { get; }
 
-    Rectangle GetWorldDrawingRectangle(int line, int column);
-    Rectangle GetWorldDrawingRectangle(Position pos)
+    Rectangle GetWorldRectangle(int line, int column);
+    Rectangle GetWorldRectangle(Position pos)
     {
-        return GetWorldDrawingRectangle(pos.Line, pos.Column);
+        return GetWorldRectangle(pos.Line, pos.Column);
     }
     Rectangle GetWorldDrawingRectangle(Point pos)
     {
-        return GetWorldDrawingRectangle(pos.Y, pos.X);
+        return GetWorldRectangle(pos.Y, pos.X);
     }
 
-    Rectangle MoveOnNextLine(Rectangle currentRectangle, int tileLine);
-    Rectangle MoveOnNextColumn(Rectangle currentRectangle);
-
-    Position GetTileAtPoint(Point point)
+    Position GetTileAtPoint(Point worldPoint)
     {
-        return GetTileAtPoint(point.X, point.Y);
+        return GetTileAtPoint(worldPoint.X, worldPoint.Y);
     }
     Position GetTileAtPoint(int x, int y);
 }

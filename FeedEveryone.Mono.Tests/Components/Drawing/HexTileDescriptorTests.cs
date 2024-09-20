@@ -17,7 +17,7 @@ public class HexTileDescriptorTests
             Width = 16
         };
 
-        Rectangle dr = td.GetWorldDrawingRectangle(0, 0);
+        Rectangle dr = td.GetWorldRectangle(0, 0);
 
         Assert.That(dr, Is.EqualTo(new Rectangle(0, 0, 16, 24)));
     }
@@ -30,7 +30,7 @@ public class HexTileDescriptorTests
             Width = 16
         };
 
-        Rectangle dr = td.GetWorldDrawingRectangle(6, 3);
+        Rectangle dr = td.GetWorldRectangle(6, 3);
 
         Assert.That(dr, Is.EqualTo(new Rectangle(48, 72, 16, 24)));
     }
@@ -43,7 +43,7 @@ public class HexTileDescriptorTests
             Width = 16
         };
 
-        Rectangle dr = td.GetWorldDrawingRectangle(3, 2);
+        Rectangle dr = td.GetWorldRectangle(3, 2);
 
         Assert.That(dr, Is.EqualTo(new Rectangle(40, 36, 16, 24)));
     }
@@ -56,7 +56,7 @@ public class HexTileDescriptorTests
             Width = 16
         };
 
-        Rectangle dr = td.GetWorldDrawingRectangle(4, 1);
+        Rectangle dr = td.GetWorldRectangle(4, 1);
 
         Assert.That(dr, Is.EqualTo(new Rectangle(16, 48, 16, 24)));
     }
@@ -69,7 +69,7 @@ public class HexTileDescriptorTests
             Width = 16
         };
 
-        Rectangle dr = td.GetWorldDrawingRectangle(5, 3);
+        Rectangle dr = td.GetWorldRectangle(5, 3);
 
         Assert.That(dr, Is.EqualTo(new Rectangle(56, 60, 16, 24)));
     }
